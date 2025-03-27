@@ -6,9 +6,9 @@ class Produto:
         self.preco = preco
 
     def salvar(self):
-        self.db.adicionar_produto(self.nome, self.quantidade, self.preco)  # <-- Nome do método corrigido
+        self.db.adicionar_produto(self.nome, self.quantidade, self.preco)  
 
     @staticmethod
     def listar_todos(db):
-        produtos = db.listar_produtos()  # <-- Nome do método corrigido
+        produtos = db.listar_produtos() 
         return [Produto(db, nome, quantidade, preco) for _, nome, quantidade, preco in produtos]

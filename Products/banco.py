@@ -15,7 +15,7 @@ class EstoqueDB:
         )''')
         self.conn.commit()
 
-    def adicionar_produto(self, nome, quantidade, preco):  # <-- Nome corrigido
+    def adicionar_produto(self, nome, quantidade, preco): 
         self.cursor.execute("INSERT INTO produtos (nome, quantidade, preco) VALUES (?, ?, ?)", (nome, quantidade, preco))
         self.conn.commit()
 
