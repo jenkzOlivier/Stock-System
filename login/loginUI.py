@@ -1,8 +1,11 @@
 import tkinter as tk
 import sys
 import customtkinter as ctk
+import os
 import subprocess
 from user import ACCESS_LEVELS, verify_password, load_users
+sys.path.append(os.path.join(os.path.dirname(__file__),"../menu")) # acessando menu folder
+import menuUI
 
 class LoginApp(ctk.CTk):
     def __init__(self):
@@ -47,6 +50,7 @@ class LoginApp(ctk.CTk):
         subprocess.Popen([sys.executable, "userManagementUI.py"]) # Abre UserManagementUI.py sem travar a execução
         
         self.destroy()  # Fecha a tela de login
+        menuUI.menu() # abrindo a janela de menu
 
 if __name__ == "__main__":
     app = LoginApp()

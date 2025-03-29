@@ -1,6 +1,6 @@
 import tkinter as tk
 import customtkinter as ctk
-from CreateUsers.userManagement import create_user, authenticate_user, ACCESS_LEVELS
+from userManagement import create_user, authenticate_user, ACCESS_LEVELS
 
 class UserManagementApp(ctk.CTk):
     def __init__(self):
@@ -39,3 +39,7 @@ class UserManagementApp(ctk.CTk):
         message, success = create_user(username, password, access_level)
         color = "green" if success else "red"
         self.label_result.configure(text=message, text_color=color)
+
+def open_user():
+    app = UserManagementApp()
+    app.mainloop()
