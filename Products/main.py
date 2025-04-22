@@ -1,17 +1,19 @@
-from banco import EstoqueDB
-from produto import Produto
+# arquivo não utilizado
 
-# Inicializa o banco
-banco = EstoqueDB()
+# from Products.banco_produto import EstoqueDB
+# from produto import Produto
 
-# Cadastra um produto
-produto1 = Produto(banco, "celular", 110, 1.900)
-produto1.salvar()
+# # Inicializa o banco
+# banco = EstoqueDB()
 
-# Lista os produtos
-produtos = Produto.listar_todos(banco)
-for p in produtos:
-    print(f"Nome: {p.nome}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
+# # Cadastra um produto
+# produto1 = Produto(banco, "celular", 110, 1.900)
+# produto1.salvar()
 
-# Fecha a conexão com o banco
-banco.fechar_conexao()
+# # Lista os produtos
+# produtos = Produto.listar_todos(banco)
+# for p in produtos:
+#     print(f"Nome: {p.nome}, Quantidade: {p.quantidade}, Preço: R${p.preco:.2f}")
+
+# # Fecha a conexão com o banco
+# banco.fechar_conexao()
