@@ -5,7 +5,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__),"../CreateUsers")) # aces
 import userManagementUI
 sys.path.append(os.path.join(os.path.dirname(__file__),"../Products"))
 import tabelaProdutoUI
-
+sys.path.append(os.path.join(os.path.dirname(__file__),"../Clientes"))
+import tabelaCliente
 def menu():
     ctk.set_appearance_mode("dark")
 
@@ -19,7 +20,12 @@ def menu():
     button_user.pack(pady=10)
 
     # criando botão que leva a janela de produtos // esse nome tem de ser modificado para materiais
-    button_user=ctk.CTkButton(window, text="Materiais", command=tabelaProdutoUI.tabela_produto)
-    button_user.pack(pady=10)
+    button_materiais=ctk.CTkButton(window, text="Materiais", command=tabelaProdutoUI.tabela_produto)
+    button_materiais.pack(pady=10)
+
+    button_clientes=ctk.CTkButton(window, text="Clientes", command=tabelaCliente.tabela_cliente)
+    button_clientes.pack(pady=10)
 
     window.mainloop()
+
+menu()
