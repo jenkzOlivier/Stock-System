@@ -1,11 +1,17 @@
 import tkinter as tk
 import sys
 import customtkinter as ctk
-import os
 import subprocess
-from user import ACCESS_LEVELS, verify_password, load_users
-sys.path.append(os.path.join(os.path.dirname(__file__),"../menu")) # acessando menu folder
-import menuUI
+import sqlite3
+from loginDatabase import ACCESS_LEVELS, verify_password
+from menu import menuUI
+
+# Função para buscar o usuário no banco de dados
+def buscar_usuario(nome):
+    with sqlite3.connect("loginDatabase.db") as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuarios WHERE nome = ?", (nome,))
+        return cursor.fetchone()
 
 class LoginApp(ctk.CTk):
     def __init__(self):
@@ -34,23 +40,22 @@ class LoginApp(ctk.CTk):
         username = self.entry_user.get()
         password = self.entry_pass.get()
 
-        users = load_users()
+        usuario = buscar_usuario(username)
 
-        if username in users and verify_password(password, users[username]["password"]):
-            access_level = users[username]["access"]
-            self.label_result.configure(text=f"Bem-vindo, {username}! Acesso: {ACCESS_LEVELS[access_level]}")
-
-            # Espera 1 segundo antes de abrir a outra tela
-            self.after(1000, self.open_user_management)
-        
+        if usuario:
+            user_id, nome, senha_hash, nivel_acesso = usuario
+            if verify_password(password, senha_hash):
+                self.label_result.configure(text=f"Bem-vindo, {nome}! Acesso: {ACCESS_LEVELS[nivel_acesso]}")
+                self.after(1000, self.open_user_management)
+            else:
+                self.label_result.configure(text="Senha incorreta", text_color="red")
         else:
-            self.label_result.configure(text="Usuário ou senha incorretos", text_color="red")
+            self.label_result.configure(text="Usuário não encontrado", text_color="red")
 
     def open_user_management(self):
-        subprocess.Popen([sys.executable, "userManagementUI.py"]) # Abre UserManagementUI.py sem travar a execução
-        
+        subprocess.Popen([sys.executable, "userManagementUI.py"])  # Abre UserManagementUI.py sem travar a execução
         self.destroy()  # Fecha a tela de login
-        menuUI.menu() # abrindo a janela de menu
+        menuUI.menu()  # Abrindo a janela de menu
 
 if __name__ == "__main__":
     app = LoginApp()
