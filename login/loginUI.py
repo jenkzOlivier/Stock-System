@@ -1,57 +1,67 @@
-import tkinter as tk
+import os
 import sys
 import customtkinter as ctk
-import os
-import subprocess
-from user import ACCESS_LEVELS, verify_password, load_users
-sys.path.append(os.path.join(os.path.dirname(__file__),"../menu")) # acessando menu folder
+from tkinter import END
+sys.path.append(os.path.join(os.path.dirname(__file__),"../menu")) # criando acesso ao folder menu
+sys.path.append(os.path.join(os.path.dirname(__file__),"../Funcionarios")) # criando acesso ao folder funcionarios
 import menuUI
+import bancoFuncionario
 
-class LoginApp(ctk.CTk):
-    def __init__(self):
-        super().__init__()
-        self.title("Login Seguro")
-        self.geometry("400x350")
 
-        ctk.set_appearance_mode("dark")
+def login():
+    window=ctk.CTk()
+    window.title("Login Seguro")
+    window.geometry("400x350")
 
-        self.label_title = ctk.CTkLabel(self, text="Acesso ao Sistema", font=("Arial", 20, "bold"))
-        self.label_title.pack(pady=10)
+    ctk.set_appearance_mode("dark")
 
-        self.entry_user = ctk.CTkEntry(self, placeholder_text="Usuário")
-        self.entry_user.pack(pady=5)
 
-        self.entry_pass = ctk.CTkEntry(self, placeholder_text="Senha", show="*")
-        self.entry_pass.pack(pady=5)
+    label_title=ctk.CTkLabel(window, text="Acesso ao Sistema", font=("Arial", 20, "bold"))
+    label_title.pack(pady=10)
 
-        self.btn_login = ctk.CTkButton(self, text="Login", command=self.login)
-        self.btn_login.pack(pady=10)
+    entry_user = ctk.CTkEntry(window, placeholder_text="Usuário")
+    entry_user.pack(pady=5)
 
-        self.label_result = ctk.CTkLabel(self, text="")
-        self.label_result.pack(pady=5)
+    entry_pass = ctk.CTkEntry(window, placeholder_text="Senha", show="*")
+    entry_pass.pack(pady=5)
 
-    def login(self):
-        username = self.entry_user.get()
-        password = self.entry_pass.get()
+    btn_login = ctk.CTkButton(window, text="Login", command=lambda:acesso(entry_user.get(),entry_pass.get()))
+    btn_login.pack(pady=10)
 
-        users = load_users()
+    label_result=ctk.CTkLabel(window, text="")
+    label_result.pack(pady=5)
 
-        if username in users and verify_password(password, users[username]["password"]):
-            access_level = users[username]["access"]
-            self.label_result.configure(text=f"Bem-vindo, {username}! Acesso: {ACCESS_LEVELS[access_level]}")
 
-            # Espera 1 segundo antes de abrir a outra tela
-            self.after(1000, self.open_user_management)
-        
+    def acesso(funcionario:str,senha:str):
+
+        acao:dict=bancoFuncionario.login_funcionario(funcionario,senha)
+        if acao["acao"]==1:
+            label_result.configure(text=f"Bem-vindo, {acao["funcionario"]}!",text_color="green")
+            window.destroy()
+            menuUI.menu(acao["acesso"])
+
         else:
-            self.label_result.configure(text="Usuário ou senha incorretos", text_color="red")
+            label_result.configure(text="Ususario ou senha incorreta", text_color="red")
+            entry_pass.delete(0,END)
+            
 
-    def open_user_management(self):
-        subprocess.Popen([sys.executable, "userManagementUI.py"]) # Abre UserManagementUI.py sem travar a execução
-        
-        self.destroy()  # Fecha a tela de login
-        menuUI.menu() # abrindo a janela de menu
+    aviso()
 
-if __name__ == "__main__":
-    app = LoginApp()
-    app.mainloop()
+    window.mainloop()
+
+
+
+def aviso():
+    # verificando se ha tabelas e credenciais cadastradas
+    if bancoFuncionario.check_funcionario_table():pass
+    else:
+        window_warning=ctk.CTk()
+        window_warning.title("ERRO DE CREDENCIAIS")
+        window_warning.geometry("350x150")
+
+        linha=ctk.CTkLabel(window_warning,text="ERRO: Usuarios não encontrados no banco",text_color="red")
+        linha.pack(expand=True,anchor=ctk.CENTER)
+
+        window_warning.mainloop()
+
+login()
