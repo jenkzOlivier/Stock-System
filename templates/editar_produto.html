@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Produto</title>
+    <link rel="stylesheet" href="/static/editar_usuario.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Editar Produto</h1>
+
+        <form method="post">
+            <label>Nome:</label>
+            <input type="text" name="nome" value="{{ produto.nome }}" required>
+
+            <label>Marca:</label>
+            <input type="text" name="marca" value="{{ produto.marca }}" required>
+
+            <label>Descrição:</label>
+            <textarea name="descricao" required>{{ produto.descricao }}</textarea>
+
+            <label>Referência:</label>
+            <input type="text" name="referencia" value="{{ produto.referencia }}" required>
+
+            <label>Valor (R$):</label>
+            <input type="number" name="valor" step="0.01" value="{{ produto.valor }}" required>
+
+            <label>Quantidade:</label>
+            <input type="number" name="quantidade" value="{{ produto.quantidade }}" required>
+
+            <div class="buttons">
+                <button type="submit" class="action-button">Atualizar</button>
+                <a href="{{ url_for('listar_produtos') }}" class="cancel-link action-button danger">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

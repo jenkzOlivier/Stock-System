@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu da Empresa - ClimaTech</title>
+  <link rel="stylesheet" href="/static/menu.css">
+</head>
+
+<body>
+  <header>
+    <div class="logo">
+      <img src="/static/assets/snowflake.png" alt="Logo da Empresa" />
+      <h1>ClimaTech</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home" tabindex="1">Início</a></li>
+        <li><a href="#servicos" tabindex="2">Serviços</a></li>
+        <li><a href="#sobre" tabindex="3">Sobre</a></li>
+        <li><a href="#contato" tabindex="4">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- AÇÕES NO TOPO -->
+  <section id="acoes" class="top-actions">
+    <h2>Ações Rápidas</h2>
+    <div class="buttons-container">
+      <a href="{{ url_for('usuarios') }}">
+        <button class="action-button" tabindex="5">Listar Usuarios</button>
+      </a>
+      <a href="{{ url_for('listar_produtos') }}">
+        <button class="action-button" tabindex="6">Listar Produtos</button>
+      </a>
+
+      <a href="{{ url_for('menu', usuario=usuario) }}">
+        <button class="action-button" tabindex="7">Outras Ações</button>
+      </a>
+    </div>
+  </section>
+
+
+  <main>
+    <section id="home">
+      <h2>Bem-vindo à ClimaTech</h2>
+      <p>Encontre os melhores serviços de climatização e refrigeração para sua casa ou empresa.</p>
+    </section>
+
+    <section id="servicos">
+      <h2>Serviços</h2>
+      <p>Oferecemos uma variedade de soluções para garantir o conforto e o bem-estar do seu ambiente.</p>
+    </section>
+
+    <section id="sobre">
+      <h2>Sobre Nós</h2>
+      <p>Com anos de experiência, somos especialistas em sistemas de ar-condicionado e refrigeração.</p>
+    </section>
+
+    <section id="contato">
+      <h2>Contato</h2>
+      <p>Fale conosco para mais informações ou para agendar uma visita.</p>
+    </section>
+  </main>
+</body>
+
+</html>

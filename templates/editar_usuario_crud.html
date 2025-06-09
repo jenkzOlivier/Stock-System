@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Usuário</title>
+  <link rel="stylesheet" href="/static/editar_usuario.css">
+</head>
+<body>
+  <body>
+  <div class="form-container">
+    <h1>Editar Usuário</h1>
+    <form method="post" novalidate>
+      <label for="user_name">Nome de Usuário:</label>
+      <input type="text" id="user_name" name="user_name" value="{{ usuario[1] }}" required />
+
+      <label for="acesso">Acesso:</label>
+      <input type="text" id="acesso" name="acesso" value="{{ usuario[2] }}" required />
+
+      <label for="nova_senha">Nova Senha (deixe em branco se não quiser alterar):</label>
+      <input type="password" id="nova_senha" name="nova_senha" />
+
+      <div class="buttons">
+        <button type="submit" class="action-button">Salvar Alterações</button>
+        <a href="{{ url_for('usuarios') }}" class="cancel-link" title="Cancelar edição">
+          <button type="button" class="action-button danger">Cancelar</button>
+        </a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

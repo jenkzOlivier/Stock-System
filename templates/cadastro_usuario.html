@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'Cadastrar' if not mode else 'Atualizar' }} Funcionário</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h2>{{ 'Cadastrar' if not mode else 'Atualizar' }} Funcionário</h2>
+        <form action="{{ '/cadastrar_usuario' if not mode else '/atualizar' }}" method="POST">
+            <label for="funcionario">Nome</label>
+            <input type="text" id="funcionario" name="funcionario" placeholder="Nome do funcionário" value="{{ funcionario if mode else '' }}" required>
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" placeholder="Senha" required>
+
+            <label for="confirm_senha">Confirme a Senha</label>
+            <input type="password" id="confirm_senha" name="confirm_senha" placeholder="Confirmar Senha" required>
+
+            <label for="acesso">Acesso</label>
+            <select id="acesso" name="acesso">
+                <option value="editor" {{ 'selected' if acesso == 'editor' else '' }}>Editor</option>
+                <option value="admin" {{ 'selected' if acesso == 'admin' else '' }}>Admin</option>
+            </select>
+
+            <button type="submit">{{ 'Cadastrar' if not mode else 'Atualizar' }}</button>
+        </form>
+        {% if errors %}
+            <div class="error-message">{{ errors }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>

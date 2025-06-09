@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuários</title>
+    <link rel="stylesheet" href="/static/listagem_de_usuario.css">
+</head>
+
+<body>
+    <h1>Usuários Cadastrados</h1>
+
+    <a href="{{ url_for('cadastrar_usuario') }}">
+        <button class="action-button">+ Novo Usuário</button>
+    </a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome de Usuário</th>
+                <th>Acesso</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for id, nome, acesso in usuarios %}
+            <tr>
+                <td data-label="ID">{{ id }}</td>
+                <td data-label="Nome de Usuário">{{ nome }}</td>
+                <td data-label="Acesso">{{ acesso }}</td>
+                <td data-label="Ações">
+                    <a href="{{ url_for('editar_usuario', id=id) }}">
+                        <button class="action-button">Editar</button>
+                    </a>
+                    <form method="post" action="{{ url_for('excluir_usuario', id=id) }}" style="display:inline;">
+                        <button class="action-button danger" onclick="return confirm('Deseja realmente excluir?')">
+                            Excluir
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

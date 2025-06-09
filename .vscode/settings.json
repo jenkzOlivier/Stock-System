@@ -1,0 +1,9 @@
+{
+    "python.analysis.extraPaths": [
+        "./data",
+        "./app_models/produto_model",
+        "./app_models/usuario_model",
+        "./app_models",
+        "./services"
+    ]
+}
