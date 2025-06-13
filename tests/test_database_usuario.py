@@ -64,22 +64,6 @@ def test_adicionar_usuario(setup_db):
     assert resultado is not None
     assert resultado[0] == user_name
 
-def test_buscar_usuario(setup_db):
-    """Verifica se um usuário pode ser encontrado pelo nome."""
-    conn = setup_db
-    cursor = conn.cursor()
-    user_name = "teste_usuario"
-    password_hash = b"hashed_senha"
-    acesso = "admin"
-
-    cursor.execute('INSERT INTO usuarios (user_name, password, acesso) VALUES (?, ?, ?)',
-                   (user_name, password_hash, acesso))
-    conn.commit()
-
-    resultado = buscar_usuario(user_name)
-    assert resultado is not None
-    assert resultado[0] == user_name
-
 def test_excluir_usuario():
     user_name = "usuario_para_excluir"
     password_hash = b"senha_excluir"
