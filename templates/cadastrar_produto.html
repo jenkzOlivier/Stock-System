@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Cadastrar Produto</title>
     <link rel="stylesheet" href="/static/cadastro_produto.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <h1>Cadastrar Novo Produto</h1>
 
-    <form method="post">
+    <form method="post" id="cadastroProdutoForm">
         <label>Nome:</label><br>
         <input type="text" name="nome" required><br><br>
 
@@ -30,5 +33,23 @@
         <button type="submit">Salvar</button>
         <a href="{{ url_for('listar_produtos') }}">Cancelar</a>
     </form>
+
+    <script>
+        const form = document.getElementById('cadastroProdutoForm');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // impede envio imediato
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Produto cadastrado com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                didClose: () => {
+                    form.submit(); // envia o formulário após o popup fechar
+                }
+            });
+        });
+    </script>
 </body>
 </html>

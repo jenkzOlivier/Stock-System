@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ 'Cadastrar' if not mode else 'Atualizar' }} Funcionário</title>
     <link rel="stylesheet" href="/static/style.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="form-container">
         <h2>{{ 'Cadastrar' if not mode else 'Atualizar' }} Funcionário</h2>
-        <form action="{{ '/cadastrar_usuario' if not mode else '/atualizar' }}" method="POST">
+        <form action="{{ '/cadastrar_usuario' if not mode else '/atualizar' }}" method="POST" id="formFuncionario">
             <label for="funcionario">Nome</label>
             <input type="text" id="funcionario" name="funcionario" placeholder="Nome do funcionário" value="{{ funcionario if mode else '' }}" required>
 
@@ -31,5 +34,23 @@
             <div class="error-message">{{ errors }}</div>
         {% endif %}
     </div>
+
+    <script>
+        const form = document.getElementById('formFuncionario');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // impede envio imediato
+
+            Swal.fire({
+                icon: 'success',
+                title: '{{ "Funcionário cadastrado com sucesso!" if not mode else "Funcionário atualizado com sucesso!" }}',
+                showConfirmButton: false,
+                timer: 2000,
+                didClose: () => {
+                    form.submit(); // envia o formulário após o popup fechar
+                }
+            });
+        });
+    </script>
 </body>
 </html>

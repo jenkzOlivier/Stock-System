@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <title>Editar Produto</title>
     <link rel="stylesheet" href="/static/editar_usuario.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <div class="form-container">
         <h1>Editar Produto</h1>
 
-        <form method="post">
+        <form method="post" id="editarProdutoForm">
             <label>Nome:</label>
             <input type="text" name="nome" value="{{ produto.nome }}" required>
 
@@ -34,5 +37,23 @@
             </div>
         </form>
     </div>
+
+    <script>
+        const form = document.getElementById('editarProdutoForm');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // impede envio imediato
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Produto atualizado com sucesso!',
+                showConfirmButton: false,
+                timer: 2000,
+                didClose: () => {
+                    form.submit(); // envia o formulário após o popup fechar
+                }
+            });
+        });
+    </script>
 </body>
 </html>

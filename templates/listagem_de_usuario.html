@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>Lista de Usuários</title>
     <link rel="stylesheet" href="/static/listagem_de_usuario.css">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -33,16 +36,42 @@
                     <a href="{{ url_for('editar_usuario', id=id) }}">
                         <button class="action-button">Editar</button>
                     </a>
-                    <form method="post" action="{{ url_for('excluir_usuario', id=id) }}" style="display:inline;">
-                        <button class="action-button danger" onclick="return confirm('Deseja realmente excluir?')">
-                            Excluir
-                        </button>
+                    <form method="post" action="{{ url_for('excluir_usuario', id=id) }}" class="form-excluir" style="display:inline;">
+                        <button type="submit" class="action-button danger">Excluir</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <script>
+        document.querySelectorAll('.form-excluir').forEach(form => {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // impede envio imediato
+
+                Swal.fire({
+                    title: 'Tem certeza?',
+                    text: 'Essa ação não pode ser desfeita.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, excluir',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Usuário deletado com sucesso!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            form.submit(); // envia o form após o popup
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

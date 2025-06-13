@@ -4,12 +4,14 @@
   <meta charset="UTF-8">
   <title>Editar Usuário</title>
   <link rel="stylesheet" href="/static/editar_usuario.css">
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <body>
   <div class="form-container">
     <h1>Editar Usuário</h1>
-    <form method="post" novalidate>
+    <form method="post" novalidate id="editarUsuarioForm">
       <label for="user_name">Nome de Usuário:</label>
       <input type="text" id="user_name" name="user_name" value="{{ usuario[1] }}" required />
 
@@ -27,5 +29,23 @@
       </div>
     </form>
   </div>
+
+  <script>
+    const form = document.getElementById('editarUsuarioForm');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // impede envio imediato
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Usuário atualizado com sucesso!',
+        showConfirmButton: false,
+        timer: 2000,
+        didClose: () => {
+          form.submit(); // envia o formulário após o popup
+        }
+      });
+    });
+  </script>
 </body>
 </html>
